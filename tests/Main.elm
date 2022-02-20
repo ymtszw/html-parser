@@ -162,6 +162,7 @@ documentTests : Test
 documentTests =
     describe "Document"
         [ test "minimal" (testParseDocument "<!DOCTYPE html><html></html>" (Html.Parser.Document [] "" [] ( [], [] ) []))
+        , test "without doctype" (testParseDocument "<html></html>" (Html.Parser.Document [] "" [] ( [], [] ) []))
         , test "example1" (testParseDocument "<!--Early!--><!DOCTYPE html LEGACY \"My legacy string stuff\"><!--Teehee!--><html><p>Got it.</p><br></html><!--Smelly feet-->" { doctype = "LEGACY \"My legacy string stuff\"", document = ( [], [ Element "p" [] [ Text "Got it." ], Element "br" [] [] ] ), postdocComments = [ "Smelly feet" ], preambleComments = [ "Early!" ], predocComments = [ "Teehee!" ] })
         , test "recapitalized1" (testParseDocument "<!--EaRlY!--><!DoCtYpE HtMl lEgAcY \"mY LeGaCy StRiNg StUfF\"><!--tEeHeE!--><HtMl><P>gOt It.</P><bR></HtMl><!--sMeLlY fEeT-->" { doctype = "lEgAcY \"mY LeGaCy StRiNg StUfF\"", document = ( [], [ Element "p" [] [ Text "gOt It." ], Element "br" [] [] ] ), postdocComments = [ "sMeLlY fEeT" ], preambleComments = [ "EaRlY!" ], predocComments = [ "tEeHeE!" ] })
         , test "realWorld1"

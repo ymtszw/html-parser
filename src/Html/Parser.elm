@@ -149,7 +149,7 @@ document =
     Parser.succeed Document
         |. Parser.chompWhile isSpaceCharacter
         |= many (Parser.backtrackable commentString |. Parser.chompWhile isSpaceCharacter)
-        |= doctype
+        |= Parser.oneOf [ Parser.backtrackable doctype, Parser.succeed "" ]
         |. Parser.chompWhile isSpaceCharacter
         |= many (Parser.backtrackable commentString |. Parser.chompWhile isSpaceCharacter)
         |= documentElement
